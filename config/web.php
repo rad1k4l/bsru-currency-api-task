@@ -9,12 +9,15 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'WIhrLVc52B5JR5cU6313uyb7s3DqxAUt',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -47,7 +50,12 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<controller>/<action>' => '<controller>/<action>'
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'currency',
+                    'pluralize' => false
+                ],
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
             ],
         ],
     ],
